@@ -196,8 +196,3 @@ This mirrors production patterns where millions of daily transactions are proces
 - **Scale ceiling**: DuckDB handles 1M+ records locally with ease. At 1B+ records, consider partitioned Parquet, incremental dbt models with date-based partitioning, and migration to cloud OLAP (Snowflake/BigQuery).
 - **No real-time stream**: Current architecture is batch-oriented. Real-time fraud detection would require a streaming layer (Kafka + Flink) feeding into the same model logic.
 
-## Resume Bullet (STAR Format)
-
-> **RiskMetric: Algorithmic Fraud Intelligence** | DuckDB, dbt, Python, GitHub Actions
->
-> Engineered a production-grade risk modeling system processing 1M+ synthetic records, utilizing DuckDB for vectorized spatial-temporal analysis and dbt for modular, incremental pipeline architecture. Developed a custom Haversine-based detection algorithm to identify "Impossible Travel" fraud, with threshold calibration analysis achieving optimized precision-recall tradeoffs across three distinct fraud archetypes. Automated the full lifecycle via GitHub Actions (CI/CD), incorporating 30+ dbt-tests for data integrity, model evaluation metrics (Precision/Recall/F1), and deploying a live Streamlit dashboard with alert triage workflow for real-time risk attribution.
