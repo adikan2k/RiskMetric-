@@ -1,0 +1,7 @@
+riskmetric:
+  outputs:
+    dev:
+      type: duckdb
+      path: "../data/riskmetric.duckdb"
+      threads: 4
+  target: dev

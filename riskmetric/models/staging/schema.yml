@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Staged raw transactions from Bronze Parquet layer"
+    columns:
+      - name: transaction_id
+        description: "Unique transaction identifier (UUID)"
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "User identifier"
+        tests:
+          - not_null
+      - name: transaction_timestamp
+        tests:
+          - not_null
+      - name: amount
+        tests:
+          - not_null
+      - name: latitude
+        tests:
+          - not_null
+      - name: longitude
+        tests:
+          - not_null
+
+  - name: stg_user_profiles
+    description: "Staged user profiles from Bronze Parquet layer"
+    columns:
+      - name: user_id
+        description: "Unique user identifier"
+        tests:
+          - unique
+          - not_null

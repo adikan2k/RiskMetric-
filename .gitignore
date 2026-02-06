@@ -1,0 +1,25 @@
+# Data files
+data/*.parquet
+data/*.duckdb
+data/*.duckdb.wal
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# dbt
+riskmetric/target/
+riskmetric/dbt_packages/
+riskmetric/logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

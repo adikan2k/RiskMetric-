@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: gold_risk_scores
+    description: >
+      Unified risk scoring table joining all three fraud detection signals
+      (Impossible Travel, Velocity Spikes, Behavioral Drift) into a composite
+      risk score (0-100) per transaction.
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: risk_score
+        description: "Composite risk score (0-100)"
+        tests:
+          - not_null
+      - name: risk_tier
+        description: "CRITICAL / HIGH / MEDIUM / LOW"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+
+  - name: gold_user_risk_profiles
+    description: >
+      Aggregated risk profile per user combining transaction volume,
+      fraud flag counts, and risk tier classification.
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+      - name: user_risk_tier
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+
+  - name: gold_fraud_attribution
+    description: >
+      Executive-level fraud attribution report showing all detected
+      fraudulent transactions with supporting evidence and accuracy labels.
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: primary_fraud_attribution
+        tests:
+          - not_null
+
+  - name: gold_model_evaluation
+    description: >
+      Confusion matrix and classification metrics (precision, recall, F1,
+      accuracy, false positive rate) computed per fraud archetype and overall
+      against ground-truth labels.
+    columns:
+      - name: archetype
+        description: "OVERALL, IMPOSSIBLE_TRAVEL, VELOCITY_SPIKE, or BEHAVIORAL_DRIFT"
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['OVERALL', 'IMPOSSIBLE_TRAVEL', 'VELOCITY_SPIKE', 'BEHAVIORAL_DRIFT']
+      - name: precision_score
+        tests:
+          - not_null
+      - name: recall_score
+        tests:
+          - not_null
+      - name: f1_score
+        tests:
+          - not_null
+
+  - name: gold_threshold_calibration
+    description: >
+      Threshold sensitivity analysis showing precision, recall, and F1
+      across a range of detection thresholds for each fraud archetype.
+      Used to calibrate optimal operating points.
+    columns:
+      - name: archetype
+        tests:
+          - not_null
+      - name: threshold_value
+        tests:
+          - not_null

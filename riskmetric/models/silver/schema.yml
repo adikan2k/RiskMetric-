@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: silver_impossible_travel
+    description: >
+      Enriched transactions with Haversine distance and ground speed
+      between consecutive transactions per user. Flags impossible travel
+      exceeding 500 mph.
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: flag_impossible_travel
+        description: "TRUE if ground speed between consecutive txns > 500 mph"
+        tests:
+          - not_null
+
+  - name: silver_velocity_spikes
+    description: >
+      Transactions enriched with 60-second sliding window counts.
+      Flags card-testing behavior (10+ txns in 60s).
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: flag_velocity_spike
+        description: "TRUE if 10+ transactions occur within 60 seconds"
+        tests:
+          - not_null
+
+  - name: silver_behavioral_drift
+    description: >
+      Transactions enriched with 30-day rolling Z-Score analysis.
+      Flags amounts exceeding 3 standard deviations from user norm.
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: flag_behavioral_drift
+        description: "TRUE if transaction amount Z-Score > 3"
+        tests:
+          - not_null
